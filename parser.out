@@ -1,40 +1,33 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    SPACE
-
 Grammar
 
 Rule 0     S' -> command_line
 Rule 1     command_line -> job
 Rule 2     command_line -> job ;
 Rule 3     command_line -> job ; command_line
-Rule 4     empty -> <empty>
-Rule 5     job -> command
-Rule 6     job -> job | command
-Rule 7     command -> simple_command
-Rule 8     command -> command REDIRECT
-Rule 9     command -> command REDIRECT TOKEN
-Rule 10    simple_command -> TOKEN
-Rule 11    simple_command -> simple_command TOKEN
+Rule 4     job -> command
+Rule 5     job -> job | command
+Rule 6     command -> simple_command
+Rule 7     command -> command REDIRECT
+Rule 8     command -> command REDIRECT TOKEN
+Rule 9     simple_command -> TOKEN
+Rule 10    simple_command -> simple_command TOKEN
 
 Terminals, with rules where they appear
 
 ;                    : 2 3
-REDIRECT             : 8 9
-SPACE                : 
-TOKEN                : 9 10 11
+REDIRECT             : 7 8
+TOKEN                : 8 9 10
 error                : 
-|                    : 6
+|                    : 5
 
 Nonterminals, with rules where they appear
 
-command              : 5 6 8 9
+command              : 4 5 7 8
 command_line         : 3 0
-empty                : 
-job                  : 1 2 3 6
-simple_command       : 7 11
+job                  : 1 2 3 5
+simple_command       : 6 10
 
 Parsing method: LALR
 
@@ -44,13 +37,13 @@ state 0
     (1) command_line -> . job
     (2) command_line -> . job ;
     (3) command_line -> . job ; command_line
-    (5) job -> . command
-    (6) job -> . job | command
-    (7) command -> . simple_command
-    (8) command -> . command REDIRECT
-    (9) command -> . command REDIRECT TOKEN
-    (10) simple_command -> . TOKEN
-    (11) simple_command -> . simple_command TOKEN
+    (4) job -> . command
+    (5) job -> . job | command
+    (6) command -> . simple_command
+    (7) command -> . command REDIRECT
+    (8) command -> . command REDIRECT TOKEN
+    (9) simple_command -> . TOKEN
+    (10) simple_command -> . simple_command TOKEN
 
     TOKEN           shift and go to state 5
 
@@ -70,7 +63,7 @@ state 2
     (1) command_line -> job .
     (2) command_line -> job . ;
     (3) command_line -> job . ; command_line
-    (6) job -> job . | command
+    (5) job -> job . | command
 
     $end            reduce using rule 1 (command_line -> job .)
     ;               shift and go to state 6
@@ -79,37 +72,37 @@ state 2
 
 state 3
 
-    (5) job -> command .
-    (8) command -> command . REDIRECT
-    (9) command -> command . REDIRECT TOKEN
+    (4) job -> command .
+    (7) command -> command . REDIRECT
+    (8) command -> command . REDIRECT TOKEN
 
-    ;               reduce using rule 5 (job -> command .)
-    |               reduce using rule 5 (job -> command .)
-    $end            reduce using rule 5 (job -> command .)
+    ;               reduce using rule 4 (job -> command .)
+    |               reduce using rule 4 (job -> command .)
+    $end            reduce using rule 4 (job -> command .)
     REDIRECT        shift and go to state 8
 
 
 state 4
 
-    (7) command -> simple_command .
-    (11) simple_command -> simple_command . TOKEN
+    (6) command -> simple_command .
+    (10) simple_command -> simple_command . TOKEN
 
-    REDIRECT        reduce using rule 7 (command -> simple_command .)
-    ;               reduce using rule 7 (command -> simple_command .)
-    |               reduce using rule 7 (command -> simple_command .)
-    $end            reduce using rule 7 (command -> simple_command .)
+    REDIRECT        reduce using rule 6 (command -> simple_command .)
+    ;               reduce using rule 6 (command -> simple_command .)
+    |               reduce using rule 6 (command -> simple_command .)
+    $end            reduce using rule 6 (command -> simple_command .)
     TOKEN           shift and go to state 9
 
 
 state 5
 
-    (10) simple_command -> TOKEN .
+    (9) simple_command -> TOKEN .
 
-    TOKEN           reduce using rule 10 (simple_command -> TOKEN .)
-    REDIRECT        reduce using rule 10 (simple_command -> TOKEN .)
-    ;               reduce using rule 10 (simple_command -> TOKEN .)
-    |               reduce using rule 10 (simple_command -> TOKEN .)
-    $end            reduce using rule 10 (simple_command -> TOKEN .)
+    TOKEN           reduce using rule 9 (simple_command -> TOKEN .)
+    REDIRECT        reduce using rule 9 (simple_command -> TOKEN .)
+    ;               reduce using rule 9 (simple_command -> TOKEN .)
+    |               reduce using rule 9 (simple_command -> TOKEN .)
+    $end            reduce using rule 9 (simple_command -> TOKEN .)
 
 
 state 6
@@ -119,13 +112,13 @@ state 6
     (1) command_line -> . job
     (2) command_line -> . job ;
     (3) command_line -> . job ; command_line
-    (5) job -> . command
-    (6) job -> . job | command
-    (7) command -> . simple_command
-    (8) command -> . command REDIRECT
-    (9) command -> . command REDIRECT TOKEN
-    (10) simple_command -> . TOKEN
-    (11) simple_command -> . simple_command TOKEN
+    (4) job -> . command
+    (5) job -> . job | command
+    (6) command -> . simple_command
+    (7) command -> . command REDIRECT
+    (8) command -> . command REDIRECT TOKEN
+    (9) simple_command -> . TOKEN
+    (10) simple_command -> . simple_command TOKEN
 
     $end            reduce using rule 2 (command_line -> job ; .)
     TOKEN           shift and go to state 5
@@ -137,12 +130,12 @@ state 6
 
 state 7
 
-    (6) job -> job | . command
-    (7) command -> . simple_command
-    (8) command -> . command REDIRECT
-    (9) command -> . command REDIRECT TOKEN
-    (10) simple_command -> . TOKEN
-    (11) simple_command -> . simple_command TOKEN
+    (5) job -> job | . command
+    (6) command -> . simple_command
+    (7) command -> . command REDIRECT
+    (8) command -> . command REDIRECT TOKEN
+    (9) simple_command -> . TOKEN
+    (10) simple_command -> . simple_command TOKEN
 
     TOKEN           shift and go to state 5
 
@@ -151,25 +144,25 @@ state 7
 
 state 8
 
-    (8) command -> command REDIRECT .
-    (9) command -> command REDIRECT . TOKEN
+    (7) command -> command REDIRECT .
+    (8) command -> command REDIRECT . TOKEN
 
-    REDIRECT        reduce using rule 8 (command -> command REDIRECT .)
-    ;               reduce using rule 8 (command -> command REDIRECT .)
-    |               reduce using rule 8 (command -> command REDIRECT .)
-    $end            reduce using rule 8 (command -> command REDIRECT .)
+    REDIRECT        reduce using rule 7 (command -> command REDIRECT .)
+    ;               reduce using rule 7 (command -> command REDIRECT .)
+    |               reduce using rule 7 (command -> command REDIRECT .)
+    $end            reduce using rule 7 (command -> command REDIRECT .)
     TOKEN           shift and go to state 12
 
 
 state 9
 
-    (11) simple_command -> simple_command TOKEN .
+    (10) simple_command -> simple_command TOKEN .
 
-    TOKEN           reduce using rule 11 (simple_command -> simple_command TOKEN .)
-    REDIRECT        reduce using rule 11 (simple_command -> simple_command TOKEN .)
-    ;               reduce using rule 11 (simple_command -> simple_command TOKEN .)
-    |               reduce using rule 11 (simple_command -> simple_command TOKEN .)
-    $end            reduce using rule 11 (simple_command -> simple_command TOKEN .)
+    TOKEN           reduce using rule 10 (simple_command -> simple_command TOKEN .)
+    REDIRECT        reduce using rule 10 (simple_command -> simple_command TOKEN .)
+    ;               reduce using rule 10 (simple_command -> simple_command TOKEN .)
+    |               reduce using rule 10 (simple_command -> simple_command TOKEN .)
+    $end            reduce using rule 10 (simple_command -> simple_command TOKEN .)
 
 
 state 10
@@ -181,22 +174,22 @@ state 10
 
 state 11
 
-    (6) job -> job | command .
-    (8) command -> command . REDIRECT
-    (9) command -> command . REDIRECT TOKEN
+    (5) job -> job | command .
+    (7) command -> command . REDIRECT
+    (8) command -> command . REDIRECT TOKEN
 
-    ;               reduce using rule 6 (job -> job | command .)
-    |               reduce using rule 6 (job -> job | command .)
-    $end            reduce using rule 6 (job -> job | command .)
+    ;               reduce using rule 5 (job -> job | command .)
+    |               reduce using rule 5 (job -> job | command .)
+    $end            reduce using rule 5 (job -> job | command .)
     REDIRECT        shift and go to state 8
 
 
 state 12
 
-    (9) command -> command REDIRECT TOKEN .
+    (8) command -> command REDIRECT TOKEN .
 
-    REDIRECT        reduce using rule 9 (command -> command REDIRECT TOKEN .)
-    ;               reduce using rule 9 (command -> command REDIRECT TOKEN .)
-    |               reduce using rule 9 (command -> command REDIRECT TOKEN .)
-    $end            reduce using rule 9 (command -> command REDIRECT TOKEN .)
+    REDIRECT        reduce using rule 8 (command -> command REDIRECT TOKEN .)
+    ;               reduce using rule 8 (command -> command REDIRECT TOKEN .)
+    |               reduce using rule 8 (command -> command REDIRECT TOKEN .)
+    $end            reduce using rule 8 (command -> command REDIRECT TOKEN .)
 

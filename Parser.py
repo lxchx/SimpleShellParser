@@ -9,6 +9,8 @@ from . import ASTTool
 class Parser:
     tokens = TOKENS
 
+    # 以下是解析器的各部分函数，碰到的第一个函数会作为解析的入口
+    # 左边是token名，右边是它的正则定义
     def p_command_line(self, p):
         """command_line : job
                         | job ';'
@@ -24,8 +26,9 @@ class Parser:
             attrs = p[0]['attrs']
             attrs['jobs'].append(p[3])  # 注意字符token也占p的位置
 
-    def p_empty(self, p):
-        r'empty :'
+    # 错误处理
+    def p_error(self, t):
+        raise SimpleShellSyntaxError("Illegal character '%s'" % t.value[0])
 
     def p_job(self, p):
         """job : command
@@ -72,6 +75,7 @@ class Parser:
             p[0] = copy.copy(p[1])
             attrs = p[0]['attrs']
             attrs['paras'].append(p[2])
+    
     def build(self):
         self.parser = yacc.yacc(module=self)
         self.lexer = Lexer()
